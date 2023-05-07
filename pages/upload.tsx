@@ -8,6 +8,7 @@ import useAuthStore from "../store/authStore";
 import { client } from "../utils/client";
 import { topics } from "../utils/constants";
 import { SanityAssetDocument } from "@sanity/client";
+import { BASE_URL } from "../utils";
 
 const Upload = () => {
   const router = useRouter();
@@ -62,9 +63,14 @@ const Upload = () => {
         },
         topic: category,
       };
-      await axios.post(`http://localhost:3000/api/post`, document);
+      await axios.post(`${BASE_URL}/api/post`, document);
       router.push("/");
     }
+  };
+  const handleDiscard = () => {
+    setSavingPost(false);
+    setVideoAsset(undefined);
+    setCaption("");
   };
 
   return (
@@ -115,7 +121,7 @@ const Upload = () => {
                       name="upload-video"
                       onChange={uploadVideo}
                       className="w-0 h-0"
-                    ></input>
+                    />
                   </label>
                 )}
               </div>
@@ -154,7 +160,7 @@ const Upload = () => {
           </select>
           <div className="flex gap-6 mt-10">
             <button
-              onClick={() => {}}
+              onClick={handleDiscard}
               type="button"
               className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >
@@ -165,7 +171,7 @@ const Upload = () => {
               type="button"
               className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >
-              Post
+              {savingPost ? "Posting..." : "Post"}
             </button>
           </div>
         </div>
