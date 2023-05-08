@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import { BASE_URL } from "../utils";
 import useAuthStore from "../store/authStore";
 import { AiFillDelete } from "react-icons/ai";
+import { Modal } from "./Modal/Modal";
+import { ImSpinner2 } from "react-icons/im";
 interface Props {
   post: Video;
 }
@@ -20,6 +22,10 @@ const VideoCard: React.FC<Props> = ({ post }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
   const { userProfile }: any = useAuthStore();
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const [deleting, setDeleting] = useState(false);
 
   const onVideoPress = () => {
     if (playing) {
@@ -38,6 +44,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
   }, [isVideoMuted]);
 
   const handleDeletePost = async () => {
+    setDeleting(true);
     await axios.delete(`${BASE_URL}/api/post/${post._id}`);
     router.push("/");
   };
@@ -76,7 +83,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
         </div>
         {userProfile?._id === post.postedBy._id && (
           <div className="max-sm:text-md ml-auto max-sm:ml-2 text-2xl flex w-[100px]">
-            <button onClick={handleDeletePost}>
+            <button onClick={() => setModalOpen(true)}>
               <AiFillDelete className="hover:text-[#F51997] " />
             </button>
           </div>
@@ -121,6 +128,41 @@ const VideoCard: React.FC<Props> = ({ post }) => {
           )}
         </div>
       </div>
+      <>
+        {modalOpen && (
+          <Modal
+            heading="Delete post"
+            onClose={() => setModalOpen(false)}
+            size="big"
+          >
+            <p className="text-gray-600">
+              Please hit confirm if you really want to delete the post
+            </p>
+            <div className="flex gap-6 mt-8">
+              <button
+                type="button"
+                className={`${
+                  deleting ? "bg-gray-300" : "bg-[#F51997]"
+                } text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none`}
+                disabled={deleting}
+                onClick={handleDeletePost}
+              >
+                {deleting ? (
+                  <ImSpinner2 className="animate-spin text-2xl w-full" />
+                ) : (
+                  "Confirm"
+                )}
+              </button>
+              <button
+                className={`bg-gray-300 text-black text-md font-medium p-2 rounded w-28 lg:w-44 outline-none`}
+                onClick={() => setModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </Modal>
+        )}
+      </>
     </div>
   );
 };

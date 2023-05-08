@@ -14,7 +14,7 @@ const Upload = () => {
   const [caption, setCaption] = useState("");
   const [topic, setTopic] = useState<String>(topics[0].name);
   const [loading, setLoading] = useState<Boolean>(false);
-  const [savingPost, setSavingPost] = useState<Boolean>(false);
+  const [savingPost, setSavingPost] = useState<boolean>(false);
   const [videoAsset, setVideoAsset] = useState<
     SanityAssetDocument | undefined
   >();
@@ -22,6 +22,8 @@ const Upload = () => {
 
   const userProfile: any = useAuthStore((state) => state.userProfile);
   const router = useRouter();
+
+  const disablePost = !videoAsset?.url || savingPost;
 
   useEffect(() => {
     if (!userProfile) router.push("/");
@@ -196,10 +198,12 @@ const Upload = () => {
               Discard
             </button>
             <button
-              disabled={videoAsset?.url ? false : true}
+              disabled={disablePost}
               onClick={handlePost}
               type="button"
-              className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
+              className={`${
+                disablePost ? "bg-gray-300" : "bg-[#F51997]"
+              } text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none`}
             >
               {savingPost ? (
                 <ImSpinner2 className="animate-spin text-2xl w-full" />
