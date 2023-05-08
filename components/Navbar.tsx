@@ -66,15 +66,13 @@ const Navbar = () => {
               </button>
             </Link>
             {userProfile.image && (
-              <Link href="">
-                <>
-                  <Image
-                    src={userProfile.image}
-                    width={40}
-                    height={40}
-                    className="rounded-full cursor-pointer"
-                  />
-                </>
+              <Link href={`/profile/${userProfile._id}`}>
+                <Image
+                  src={userProfile.image}
+                  width={40}
+                  height={40}
+                  className="rounded-full cursor-pointer"
+                />
               </Link>
             )}
             <button

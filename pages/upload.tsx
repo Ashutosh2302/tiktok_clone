@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
-
+import { ImSpinner3, ImSpinner2 } from "react-icons/im";
 import useAuthStore from "../store/authStore";
 import { BASE_URL } from "../utils";
 import { client } from "../utils/client";
@@ -98,8 +98,8 @@ const Upload = () => {
           </div>
           <div className=" border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center  outline-none mt-10 w-[260px] h-[458px] p-10 cursor-pointer hover:border-red-300 hover:bg-gray-100">
             {loading ? (
-              <p className="text-center text-3xl text-red-400 font-semibold">
-                Uploading...
+              <p className="text-center text-6xl font-semibold">
+                <ImSpinner3 className="animate-spin" />
               </p>
             ) : (
               <div>
@@ -201,7 +201,11 @@ const Upload = () => {
               type="button"
               className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
             >
-              {savingPost ? "Posting..." : "Post"}
+              {savingPost ? (
+                <ImSpinner2 className="animate-spin text-2xl w-full" />
+              ) : (
+                "Post"
+              )}
             </button>
           </div>
         </div>
