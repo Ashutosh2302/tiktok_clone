@@ -60,9 +60,13 @@ const VideoCard: React.FC<Props> = ({ post }) => {
                 </p>
               </div>
             </Link>
+            <Link href={`/detail/${post._id}`}>
+              <p className="mt-2 font-normal ">{post.caption}</p>
+            </Link>
           </div>
         </div>
       </div>
+
       <div className="lg:ml-20 flex gap-4 relative">
         <div
           onMouseEnter={() => setIsHover(true)}
@@ -73,12 +77,12 @@ const VideoCard: React.FC<Props> = ({ post }) => {
             <video
               loop
               ref={videoRef}
-              src={post.video ? post.video.asset.url : ""}
-              className="lg:w-[600px] h-[300px] md:h-[400px] rounded-2xl cursor-pointer bg-gray-100"
+              src={post.video.asset.url}
+              className="lg:w-[600px] h-[300px] md:h-[400px] lg:h-[528px] w-[200px] rounded-2xl cursor-pointer bg-gray-100"
             />
           </Link>
           {isHover && (
-            <div className="absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 flex gap-10 lg:justify-between">
+            <div className="absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 flex gap-10 lg:justify-between w-[100px] md:w-[50px] lg:w-[600px] p-3">
               {playing ? (
                 <button onClick={onVideoPress}>
                   <BsFillPauseFill className="text-black text-2xl lg:text-4xl" />
