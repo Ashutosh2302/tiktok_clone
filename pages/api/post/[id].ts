@@ -27,5 +27,8 @@ export default async function handler(
       ])
       .commit();
     res.status(200).json(data);
+  } else if (req.method === "DELETE") {
+    const { id }: any = req.query;
+    await client.delete(id).then(() => res.status(201).json("Video deleted"));
   }
 }

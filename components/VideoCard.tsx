@@ -2,19 +2,24 @@ import { Video } from "../types";
 import Image from "next/image";
 import Link from "next/link";
 import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
-import { BsPlay, BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
+import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { GoVerified } from "react-icons/go";
 import { useEffect, useRef, useState } from "react";
-
+import axios from "axios";
+import { useRouter } from "next/router";
+import { BASE_URL } from "../utils";
+import useAuthStore from "../store/authStore";
+import { AiFillDelete } from "react-icons/ai";
 interface Props {
   post: Video;
 }
 const VideoCard: React.FC<Props> = ({ post }) => {
-  console.log({ post });
   const [isHover, setIsHover] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const router = useRouter();
+  const { userProfile }: any = useAuthStore();
 
   const onVideoPress = () => {
     if (playing) {
@@ -32,9 +37,13 @@ const VideoCard: React.FC<Props> = ({ post }) => {
     }
   }, [isVideoMuted]);
 
+  const handleDeletePost = async () => {
+    await axios.delete(`${BASE_URL}/api/post/${post._id}`);
+    router.push("/");
+  };
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
-      <div>
+      <div className="flex max-sm:gap-1 md:gap-2 gap-20">
         <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
           <div className="md:w-16 md:h-16 w-10 h-10">
             <Link href={`profile/${post.postedBy._id}`}>
@@ -65,6 +74,13 @@ const VideoCard: React.FC<Props> = ({ post }) => {
             </Link>
           </div>
         </div>
+        {userProfile?._id === post.postedBy._id && (
+          <div className="max-sm:text-md ml-auto max-sm:ml-2 text-2xl flex w-[100px]">
+            <button onClick={handleDeletePost}>
+              <AiFillDelete className="hover:text-[#F51997] " />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="lg:ml-20 flex gap-4 relative">

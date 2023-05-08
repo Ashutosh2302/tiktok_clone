@@ -7,13 +7,13 @@ interface Props {
   onLike: () => void;
   onDislike: () => void;
 }
+
 const LikeButton: React.FC<Props> = ({ likes, onLike, onDislike }) => {
-  const { userProfile }: any = useAuthStore();
+  const { userProfile, allUsers }: any = useAuthStore();
   const [alreadyLiked, setAlreadyLiked] = useState(false);
 
   const isLiked = likes?.some((item) => item._ref === userProfile?._id);
-  console.log({ likes });
-  console.log({ isLiked });
+
   useEffect(() => {
     if (isLiked) {
       setAlreadyLiked(true);
