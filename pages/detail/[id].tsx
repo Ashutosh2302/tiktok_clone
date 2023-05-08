@@ -12,8 +12,8 @@ import Link from "next/link";
 import useAuthStore from "../../store/authStore";
 import LikeButton from "../../components/LikeButton";
 import Comments from "../../components/Comments";
-import comment from "@/sanitybackend/schemas/comment";
 
+import { uuid } from "uuidv4";
 interface Props {
   postDetails: Video;
 }
@@ -48,17 +48,23 @@ const Detail: React.FC<Props> = ({ postDetails }) => {
   }, [post, isVideoMuted]);
 
   const handleLike = async (like: boolean) => {
+    setPost({
+      ...post,
+      likes: like
+        ? post.likes.concat([{ _key: uuid(), _ref: userProfile._id }] as any)
+        : post.likes.filter((like: any) => like._ref !== userProfile._id),
+    });
+
     if (userProfile) {
       const { data } = await axios.put(`${BASE_URL}/api/like`, {
         userId: userProfile._id,
         postId: post._id,
         like,
       });
-      setPost({ ...post, likes: data.likes });
     }
   };
 
-  const addComment = async (e) => {
+  const addComment = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (userProfile && comment) {
       setIsPostingComment(true);
