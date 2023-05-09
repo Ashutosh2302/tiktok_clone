@@ -53,7 +53,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
       <div className="flex max-sm:gap-1 md:gap-2 gap-20">
         <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
           <div className="md:w-16 md:h-16 w-10 h-10">
-            <Link href={`profile/${post.postedBy._id}`}>
+            <Link href={`/profile/${post.postedBy._id}`}>
               <Image
                 src={post.postedBy.image}
                 width={62}
@@ -64,7 +64,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
             </Link>
           </div>
           <div>
-            <Link href={`profile/${post.postedBy._id}`}>
+            <Link href={`/profile/${post.postedBy._id}`}>
               <div className="flex items-center gap-2">
                 <p className="flex gap-2 items-center md:text-md font-bold text-primary">
                   {post.postedBy.userName}{" "}

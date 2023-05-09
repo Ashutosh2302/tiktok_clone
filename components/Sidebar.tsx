@@ -11,7 +11,6 @@ const Sidebar = () => {
   const normalLink =
     "flex items-center gap-3 text-[#F51997] hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold rounded";
 
-  const userProfile = null;
   return (
     <div>
       <div
