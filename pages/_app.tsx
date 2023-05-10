@@ -37,6 +37,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
+        <title>Tiktok clone</title>
       </Head>
       <GoogleOAuthProvider
         clientId={`${process.env.NEXT_PUBLIC_GOOGLE_API_TOKEN}`}
