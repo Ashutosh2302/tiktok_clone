@@ -159,7 +159,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
         {userProfile && userProfile?._id === post.postedBy._id && (
           <div className="max-sm:text-md ml-auto max-sm:ml-8 max-sm:text-2xl lg:text-3xl flex w-[100px]">
             <button onClick={() => setModalOpen(true)}>
-              <AiFillDelete className="hover:text-[#F51997] mt-3" />
+              <AiFillDelete className="hover:text-[#F51997] mt-1 ml-8" />
             </button>
           </div>
         )}
