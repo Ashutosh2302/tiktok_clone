@@ -9,7 +9,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { BASE_URL } from "../utils";
 import useAuthStore from "../store/authStore";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { Modal } from "./Modal/Modal";
 import { ImSpinner2 } from "react-icons/im";
 import LikeButton from "./LikeButton";
@@ -31,7 +31,10 @@ const VideoCard: React.FC<Props> = ({ post }) => {
 
   const [postDupicate, setPost] = useState(post);
 
-  // if (!post) null;
+  const [captionModalOpen, setCaptionModalOpen] = useState(false);
+  const [editedCaption, setEditedCaption] = useState(post.caption);
+  const [editing, setEditing] = useState(false);
+
   const onVideoPress = () => {
     if (playing) {
       videoRef?.current?.pause();
@@ -52,6 +55,22 @@ const VideoCard: React.FC<Props> = ({ post }) => {
     setDeleting(true);
     await axios.delete(`${BASE_URL}/api/post/${post._id}`);
     router.push("/");
+  };
+
+  const handleEditCaption = async () => {
+    setEditing(true);
+    await axios
+      .put(`${BASE_URL}/api/caption/${post._id}`, {
+        caption: editedCaption,
+      })
+      .then(() => {
+        setCaptionModalOpen(false);
+        setEditing(false);
+        setPost({
+          ...postDupicate,
+          caption: editedCaption,
+        });
+      });
   };
 
   const handleLike = async (like: boolean) => {
@@ -103,7 +122,10 @@ const VideoCard: React.FC<Props> = ({ post }) => {
         </div>
       </div>
       <div className="lg:ml-12 my-3 ">
-        <p className="font-normal">{post.caption}</p>
+        <p className="font-normal">{postDupicate.caption}</p>
+        <button onClick={() => setCaptionModalOpen(true)}>
+          <AiFillEdit />
+        </button>
       </div>
       <div className="lg:ml-10 flex gap-4 relative w-fit">
         <div
@@ -193,6 +215,46 @@ const VideoCard: React.FC<Props> = ({ post }) => {
               <button
                 className={`bg-gray-300 text-black text-md font-medium p-2 rounded w-28 lg:w-44 outline-none`}
                 onClick={() => setModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </Modal>
+        )}
+        {captionModalOpen && (
+          <Modal
+            size="small"
+            onClose={() => {
+              setCaptionModalOpen(false);
+            }}
+            heading="Edit caption"
+          >
+            <input
+              defaultValue={editedCaption}
+              onChange={(e) => setEditedCaption(e.target.value)}
+              className="bg:primary outline-black border-2 w-[380px]"
+            />
+            <div className="flex gap-6 mt-8">
+              <button
+                type="button"
+                disabled={editing}
+                className={`${
+                  editing ? "bg-gray-300" : "bg-[#F51997]"
+                } text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none`}
+                onClick={handleEditCaption}
+              >
+                {editing ? (
+                  <ImSpinner2 className="animate-spin text-2xl w-full" />
+                ) : (
+                  "Confirm"
+                )}
+              </button>
+              <button
+                className={`bg-gray-300 text-black text-md font-medium p-2 rounded w-28 lg:w-44 outline-none`}
+                onClick={() => {
+                  setCaptionModalOpen(false);
+                  setEditedCaption((prev) => prev);
+                }}
               >
                 Cancel
               </button>
