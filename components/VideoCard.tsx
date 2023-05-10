@@ -12,6 +12,8 @@ import useAuthStore from "../store/authStore";
 import { AiFillDelete } from "react-icons/ai";
 import { Modal } from "./Modal/Modal";
 import { ImSpinner2 } from "react-icons/im";
+import LikeButton from "./LikeButton";
+import { uuid } from "uuidv4";
 interface Props {
   post: Video;
 }
@@ -27,6 +29,9 @@ const VideoCard: React.FC<Props> = ({ post }) => {
 
   const [deleting, setDeleting] = useState(false);
 
+  const [postDupicate, setPost] = useState(post);
+
+  // if (!post) null;
   const onVideoPress = () => {
     if (playing) {
       videoRef?.current?.pause();
@@ -48,12 +53,34 @@ const VideoCard: React.FC<Props> = ({ post }) => {
     await axios.delete(`${BASE_URL}/api/post/${post._id}`);
     router.push("/");
   };
+
+  const handleLike = async (like: boolean) => {
+    setPost({
+      ...postDupicate,
+      likes: like
+        ? (postDupicate.likes || []).concat([
+            { _key: uuid(), _ref: userProfile._id },
+          ] as any)
+        : postDupicate.likes.filter(
+            (like: any) => like._ref !== userProfile._id
+          ),
+    });
+
+    if (userProfile) {
+      await axios.put(`${BASE_URL}/api/like`, {
+        userId: userProfile._id,
+        postId: post._id,
+        like,
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
       <div className="flex max-sm:gap-1 md:gap-2 gap-20">
         <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
           <div className="md:w-16 md:h-16 w-10 h-10">
-            <Link href={`/profile/${post.postedBy._id}`}>
+            <Link href={`/profile/${post?.postedBy._id}`}>
               <Image
                 src={post.postedBy.image}
                 width={62}
@@ -89,7 +116,6 @@ const VideoCard: React.FC<Props> = ({ post }) => {
           </div>
         )}
       </div>
-
       <div className="lg:ml-20 flex gap-4 relative">
         <div
           onMouseEnter={() => setIsHover(true)}
@@ -127,6 +153,15 @@ const VideoCard: React.FC<Props> = ({ post }) => {
             </div>
           )}
         </div>
+      </div>
+      <div className="lg:ml-20 flex gap-4 relative">
+        {userProfile && (
+          <LikeButton
+            likes={postDupicate.likes}
+            onLike={() => handleLike(true)}
+            onDislike={() => handleLike(false)}
+          />
+        )}
       </div>
       <>
         {modalOpen && (
