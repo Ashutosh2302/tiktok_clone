@@ -52,9 +52,9 @@ const Detail: React.FC<Props> = ({ postDetails }) => {
       ...post,
       likes: like
         ? (post.likes || []).concat([
-            { _key: uuid(), _ref: userProfile._id },
+            { _key: uuid(), _id: userProfile._id },
           ] as any)
-        : post.likes.filter((like: any) => like._ref !== userProfile._id),
+        : post.likes.filter((like: any) => like._id !== userProfile._id),
     });
 
     if (userProfile) {

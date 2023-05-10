@@ -9,11 +9,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { BASE_URL } from "../utils";
 import useAuthStore from "../store/authStore";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { Modal } from "./Modal/Modal";
 import { ImSpinner2 } from "react-icons/im";
 import LikeButton from "./LikeButton";
 import { uuid } from "uuidv4";
+import { BsPenFill } from "react-icons/bs";
 interface Props {
   post: Video;
 }
@@ -78,10 +79,10 @@ const VideoCard: React.FC<Props> = ({ post }) => {
       ...postDupicate,
       likes: like
         ? (postDupicate.likes || []).concat([
-            { _key: uuid(), _ref: userProfile._id },
+            { _key: uuid(), _id: userProfile._id },
           ] as any)
         : postDupicate.likes.filter(
-            (like: any) => like._ref !== userProfile._id
+            (like: any) => like._id !== userProfile._id
           ),
     });
 
@@ -121,13 +122,17 @@ const VideoCard: React.FC<Props> = ({ post }) => {
           </div>
         </div>
       </div>
-      <div className="lg:ml-12 my-3 ">
-        <p className="font-normal">{postDupicate.caption}</p>
-        {post.postedBy._id === userProfile._id && (
-          <button onClick={() => setCaptionModalOpen(true)}>
-            <AiFillEdit />
-          </button>
-        )}
+      <div className="lg:ml-12 my-3 flex gap-5">
+        <div>
+          <p className="font-normal">{postDupicate.caption}</p>
+        </div>
+        <div>
+          {post.postedBy._id === userProfile._id && (
+            <button onClick={() => setCaptionModalOpen(true)}>
+              <BsPenFill className="hover:text-[#F51997]" />
+            </button>
+          )}
+        </div>
       </div>
       <div className="lg:ml-10 flex gap-4 relative w-fit">
         <div

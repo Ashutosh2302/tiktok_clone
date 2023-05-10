@@ -14,7 +14,12 @@ export const allPostsQuery = () => {
         userName,
         image
       },
-    likes,
+      likes[]->{
+        _id,
+        userName,
+        image,
+      }
+  ,
     comments[]{
       comment,
       _key,
@@ -45,7 +50,11 @@ export const postDetailQuery = (postId: string | string[]) => {
       userName,
       image
     },
-     likes,
+    likes[]->{
+      _id,
+      userName,
+      image,
+    },
     comments[]{
       comment,
       _key,

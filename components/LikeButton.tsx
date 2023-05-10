@@ -18,7 +18,7 @@ const LikeButton: React.FC<Props> = ({
   const { userProfile, allUsers }: any = useAuthStore();
   const [alreadyLiked, setAlreadyLiked] = useState(false);
 
-  const isLiked = likes?.some((item) => item._ref === userProfile?._id);
+  const isLiked = likes?.some((item) => item._id === userProfile?._id);
 
   useEffect(() => {
     if (isLiked) {
@@ -47,6 +47,11 @@ const LikeButton: React.FC<Props> = ({
           <p className="text-md font-semibold mb-2">{likes?.length || 0}</p>
         )}
       </div>
+
+      <p className="text-gray-500 text-xs flex items-center h-12">
+        Liked by {likes[0].userName.split(" ")[0]}{" "}
+        {likes.length > 1 ? "and others" : ""}
+      </p>
     </div>
   );
 };
