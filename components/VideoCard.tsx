@@ -123,9 +123,11 @@ const VideoCard: React.FC<Props> = ({ post }) => {
       </div>
       <div className="lg:ml-12 my-3 ">
         <p className="font-normal">{postDupicate.caption}</p>
-        <button onClick={() => setCaptionModalOpen(true)}>
-          <AiFillEdit />
-        </button>
+        {post.postedBy._id === userProfile._id && (
+          <button onClick={() => setCaptionModalOpen(true)}>
+            <AiFillEdit />
+          </button>
+        )}
       </div>
       <div className="lg:ml-10 flex gap-4 relative w-fit">
         <div
