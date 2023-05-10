@@ -79,37 +79,33 @@ const VideoCard: React.FC<Props> = ({ post }) => {
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
       <div className="flex max-sm:gap-1 md:gap-2 gap-20">
         <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
-          <div className="md:w-16 md:h-16 w-10 h-10">
+          <div className="md:w-12 md:h-12 w-7 h-7">
             <Link href={`/profile/${post?.postedBy._id}`}>
               <Image
                 src={post.postedBy.image}
-                width={62}
-                height={62}
+                width={20}
+                height={20}
                 className="rounded-full"
                 layout="responsive"
               />
             </Link>
           </div>
-          <div>
+          <div className="flex justify-center">
             <Link href={`/profile/${post.postedBy._id}`}>
               <div className="flex items-center gap-2">
                 <p className="flex gap-2 items-center md:text-md font-bold text-primary">
                   {post.postedBy.userName}{" "}
                   <GoVerified className="text-blue-400 text-md" />
                 </p>
-
-                <p className="capitalize font-medium text-xs text-gray-500 hidden md:block">
-                  {post.postedBy.userName}
-                </p>
               </div>
-            </Link>
-            <Link href={`/detail/${post._id}`}>
-              <p className="mt-2 font-normal ">{post.caption}</p>
             </Link>
           </div>
         </div>
       </div>
-      <div className="lg:ml-20 flex gap-4 relative">
+      <div className="lg:ml-12 my-3 ">
+        <p className="font-normal">{post.caption}</p>
+      </div>
+      <div className="lg:ml-10 flex gap-4 relative w-fit">
         <div
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
@@ -147,25 +143,28 @@ const VideoCard: React.FC<Props> = ({ post }) => {
           )}
         </div>
       </div>
-      <div className="lg:ml-20 flex gap-4 max-sm:gap-20 lg:justify-between relative">
+
+      <div className="lg:ml-12 flex gap-4 max-sm:gap-20 lg:justify-between relative lg:mr-12">
         <div className="flex relative">
           {userProfile && (
             <LikeButton
               likes={postDupicate.likes}
               onLike={() => handleLike(true)}
               onDislike={() => handleLike(false)}
+              showLikeCount={false}
             />
           )}
         </div>
 
         {userProfile && userProfile?._id === post.postedBy._id && (
-          <div className="max-sm:text-md ml-auto max-sm:ml-8  max-sm:text-2xl lg:text-3xl flex w-[100px]">
+          <div className="max-sm:text-md ml-auto max-sm:ml-8 max-sm:text-2xl lg:text-3xl flex w-[100px]">
             <button onClick={() => setModalOpen(true)}>
-              <AiFillDelete className="hover:text-[#F51997]" />
+              <AiFillDelete className="hover:text-[#F51997] mt-3" />
             </button>
           </div>
         )}
       </div>
+
       <>
         {modalOpen && (
           <Modal
