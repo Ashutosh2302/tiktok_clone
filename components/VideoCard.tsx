@@ -108,13 +108,6 @@ const VideoCard: React.FC<Props> = ({ post }) => {
             </Link>
           </div>
         </div>
-        {userProfile?._id === post.postedBy._id && (
-          <div className="max-sm:text-md ml-auto max-sm:ml-2 text-2xl flex w-[100px]">
-            <button onClick={() => setModalOpen(true)}>
-              <AiFillDelete className="hover:text-[#F51997] " />
-            </button>
-          </div>
-        )}
       </div>
       <div className="lg:ml-20 flex gap-4 relative">
         <div
@@ -154,13 +147,23 @@ const VideoCard: React.FC<Props> = ({ post }) => {
           )}
         </div>
       </div>
-      <div className="lg:ml-20 flex gap-4 relative">
-        {userProfile && (
-          <LikeButton
-            likes={postDupicate.likes}
-            onLike={() => handleLike(true)}
-            onDislike={() => handleLike(false)}
-          />
+      <div className="lg:ml-20 flex gap-4 max-sm:gap-20 lg:justify-between relative">
+        <div className="flex relative">
+          {userProfile && (
+            <LikeButton
+              likes={postDupicate.likes}
+              onLike={() => handleLike(true)}
+              onDislike={() => handleLike(false)}
+            />
+          )}
+        </div>
+
+        {userProfile && userProfile?._id === post.postedBy._id && (
+          <div className="max-sm:text-md ml-auto max-sm:ml-8  max-sm:text-2xl lg:text-3xl flex w-[100px]">
+            <button onClick={() => setModalOpen(true)}>
+              <AiFillDelete className="hover:text-[#F51997]" />
+            </button>
+          </div>
         )}
       </div>
       <>
