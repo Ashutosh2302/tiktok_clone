@@ -1,9 +1,10 @@
+import { User } from "../types";
 import { useState, useEffect } from "react";
 import { MdFavorite } from "react-icons/md";
 import useAuthStore from "../store/authStore";
 
 interface Props {
-  likes: any[];
+  likes: User[];
   onLike: () => void;
   onDislike: () => void;
   showLikeCount?: boolean;
@@ -47,11 +48,12 @@ const LikeButton: React.FC<Props> = ({
           <p className="text-md font-semibold mb-2">{likes?.length || 0}</p>
         )}
       </div>
-
-      <p className="text-gray-500 text-xs flex items-center h-12">
-        Liked by {likes[0].userName.split(" ")[0]}{" "}
-        {likes.length > 1 ? "and others" : ""}
-      </p>
+      {likes && likes.length !== 0 && (
+        <p className="text-gray-500 text-xs flex items-center h-12">
+          Liked by {likes[0].userName.split(" ")[0]}{" "}
+          {likes.length > 1 ? "and others" : ""}
+        </p>
+      )}
     </div>
   );
 };

@@ -13,11 +13,9 @@ export interface Video {
     image: string;
   };
   likes: {
-    postedBy: {
-      _id: string;
-      userName: string;
-      image: string;
-    };
+    _id: string;
+    userName: string;
+    image: string;
   }[];
   comments: {
     comment: string;
@@ -31,7 +29,6 @@ export interface Video {
 
 export interface User {
   _id: string;
-  _type: string;
   userName: string;
   image: string;
 }

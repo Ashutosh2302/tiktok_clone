@@ -52,13 +52,17 @@ const Detail: React.FC<Props> = ({ postDetails }) => {
       ...post,
       likes: like
         ? (post.likes || []).concat([
-            { _key: uuid(), _id: userProfile._id },
-          ] as any)
-        : post.likes.filter((like: any) => like._id !== userProfile._id),
+            {
+              _id: userProfile._id,
+              userName: userProfile.userName,
+              image: userProfile.image,
+            },
+          ])
+        : post.likes.filter((like) => like._id !== userProfile._id),
     });
 
     if (userProfile) {
-      const { data } = await axios.put(`${BASE_URL}/api/like`, {
+      await axios.put(`${BASE_URL}/api/like`, {
         userId: userProfile._id,
         postId: post._id,
         like,

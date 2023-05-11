@@ -13,8 +13,8 @@ import { AiFillDelete } from "react-icons/ai";
 import { Modal } from "./Modal/Modal";
 import { ImSpinner2 } from "react-icons/im";
 import LikeButton from "./LikeButton";
-import { uuid } from "uuidv4";
 import { BsPenFill } from "react-icons/bs";
+
 interface Props {
   post: Video;
 }
@@ -79,11 +79,13 @@ const VideoCard: React.FC<Props> = ({ post }) => {
       ...postDupicate,
       likes: like
         ? (postDupicate.likes || []).concat([
-            { _key: uuid(), _id: userProfile._id },
-          ] as any)
-        : postDupicate.likes.filter(
-            (like: any) => like._id !== userProfile._id
-          ),
+            {
+              _id: userProfile._id,
+              userName: userProfile.userName,
+              image: userProfile.image,
+            },
+          ])
+        : postDupicate.likes.filter((like) => like._id !== userProfile._id),
     });
 
     if (userProfile) {
@@ -173,8 +175,8 @@ const VideoCard: React.FC<Props> = ({ post }) => {
         </div>
       </div>
 
-      <div className="lg:ml-12 flex gap-4 max-sm:gap-20 lg:justify-between relative lg:mr-12">
-        <div className="flex relative">
+      <div className="flex justify-start lg:ml-10 gap-10">
+        <div className="w-6/12">
           {userProfile && (
             <LikeButton
               likes={postDupicate.likes}
@@ -186,9 +188,9 @@ const VideoCard: React.FC<Props> = ({ post }) => {
         </div>
 
         {userProfile && userProfile?._id === post.postedBy._id && (
-          <div className="max-sm:text-md ml-auto max-sm:ml-8 max-sm:text-2xl lg:text-3xl flex w-[100px]">
+          <div className="text-3xl w-fit flex justify-end w-6/12 pt-2">
             <button onClick={() => setModalOpen(true)}>
-              <AiFillDelete className="hover:text-[#F51997] mt-1 ml-8" />
+              <AiFillDelete className="hover:text-[#F51997]" />
             </button>
           </div>
         )}
