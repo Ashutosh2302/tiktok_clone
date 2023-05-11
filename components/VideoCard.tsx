@@ -182,7 +182,6 @@ const VideoCard: React.FC<Props> = ({ post }) => {
               likes={postDupicate.likes}
               onLike={() => handleLike(true)}
               onDislike={() => handleLike(false)}
-              showLikeCount={false}
             />
           )}
         </div>

@@ -10,15 +10,9 @@ interface Props {
   likes: User[];
   onLike: () => void;
   onDislike: () => void;
-  showLikeCount?: boolean;
 }
 
-const LikeButton: React.FC<Props> = ({
-  likes,
-  onLike,
-  onDislike,
-  showLikeCount = true,
-}) => {
+const LikeButton: React.FC<Props> = ({ likes, onLike, onDislike }) => {
   const { userProfile, allUsers }: any = useAuthStore();
   const [alreadyLiked, setAlreadyLiked] = useState(false);
 
@@ -79,9 +73,6 @@ const LikeButton: React.FC<Props> = ({
                 </div>
                 <div className="flex items-center">Like</div>
               </div>
-            )}
-            {showLikeCount && (
-              <p className="text-md font-semibold mb-2">{likes?.length || 0}</p>
             )}
           </div>
         </div>
