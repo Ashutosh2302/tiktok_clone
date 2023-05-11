@@ -10,19 +10,12 @@ interface Props {
 }
 const Home: React.FC<Props> = ({ videos }) => {
   return (
-    <div className="flex gap-6 md:gap-20">
-      <div className="h-[92vh] overflow-hidden">
-        <Sidebar />
-      </div>
-      <div className="flex flex-col gap-10 videos h-full">
-        {videos.length ? (
-          videos.map((video: Video) => (
-            <VideoCard post={video} key={video._id} />
-          ))
-        ) : (
-          <NoResults text="No Videos" />
-        )}
-      </div>
+    <div className="flex flex-col gap-10 videos h-full">
+      {videos.length ? (
+        videos.map((video: Video) => <VideoCard post={video} key={video._id} />)
+      ) : (
+        <NoResults text="No Videos" />
+      )}
     </div>
   );
 };
