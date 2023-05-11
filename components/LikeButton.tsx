@@ -49,7 +49,7 @@ const LikeButton: React.FC<Props> = ({
         )}
       </div>
       {likes && likes.length !== 0 && (
-        <p className="text-gray-500 text-xs flex items-center h-12">
+        <p className="hidden lg:flex text-gray-500 text-xs flex items-center h-12">
           Liked by {likes[0].userName.split(" ")[0]}{" "}
           {likes.length > 1 ? "and others" : ""}
         </p>
