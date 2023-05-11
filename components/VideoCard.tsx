@@ -98,7 +98,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
   };
 
   return (
-    <div className="flex flex-col border-b-2 border-gray-200 pb-6">
+    <div className="flex flex-col border-b-2 border-gray-200 pb-6 lg:w-[700px] h-[450px] md:h-[600px] lg:h-[715px] w-[260px]">
       <div className="flex max-sm:gap-1 md:gap-2 gap-20">
         <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded">
           <div className="md:w-12 md:h-12 w-7 h-7">
