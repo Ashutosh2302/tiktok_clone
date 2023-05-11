@@ -147,7 +147,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
               loop
               ref={videoRef}
               src={post.video.asset.url}
-              className="lg:w-[600px] h-[300px] md:h-[400px] lg:h-[528px] w-[300px] rounded-2xl cursor-pointer bg-gray-100"
+              className="lg:w-[600px] h-[280px] md:h-[400px] lg:h-[528px] w-[260px] rounded-2xl cursor-pointer bg-gray-100"
             />
           </Link>
           {isHover && (
@@ -175,7 +175,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
         </div>
       </div>
 
-      <div className="flex justify-start lg:ml-10 max-sm:justify-between max-sm:w-[300px] sm:w-[300px] sm:justify-between lg:w-[600px]">
+      <div className="flex justify-start lg:ml-10 max-sm:justify-between max-sm:w-[250px] sm:w-[250px] sm:justify-between lg:w-[600px]">
         <div className="lg:w-6/12">
           {userProfile && (
             <LikeButton
