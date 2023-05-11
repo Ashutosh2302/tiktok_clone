@@ -127,7 +127,7 @@ const VideoCard: React.FC<Props> = ({ post }) => {
           <p className="font-normal">{postDupicate.caption}</p>
         </div>
         <div>
-          {post.postedBy._id === userProfile._id && (
+          {userProfile && post.postedBy._id === userProfile._id && (
             <button onClick={() => setCaptionModalOpen(true)}>
               <BsPenFill className="hover:text-[#F51997]" />
             </button>

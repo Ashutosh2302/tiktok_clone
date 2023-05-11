@@ -2,23 +2,23 @@ export const allPostsQuery = () => {
   const query = `*[_type == "post"] | order(_createdAt desc){
     _id,
      caption,
-       video{
+    video{
         asset->{
           _id,
           url
         }
       },
-      userId,
-      postedBy->{
+    userId,
+    postedBy->{
         _id,
         userName,
         image
-      },
-      likes[]->{
+    },
+    likes[]->{
         _id,
         userName,
         image,
-      }
+    }
   ,
     comments[]{
       comment,
@@ -83,7 +83,11 @@ export const searchPostsQuery = (searchTerm: string | string[]) => {
       userName,
       image
     },
-likes,
+    likes[]->{
+      _id,
+      userName,
+      image,
+    },
     comments[]{
       comment,
       _key,
@@ -125,7 +129,12 @@ export const userCreatedPostsQuery = (userId: string | string[]) => {
       userName,
       image
     },
- likes,
+    likes[]->{
+      _id,
+      userName,
+      image,
+    },
+
 
     comments[]{
       comment,
@@ -157,7 +166,11 @@ export const userLikedPostsQuery = (userId: string | string[]) => {
       userName,
       image
     },
- likes,
+    likes[]->{
+      _id,
+      userName,
+      image,
+    },
 
     comments[]{
       comment,
@@ -189,7 +202,11 @@ export const topicPostsQuery = (topic: string | string[]) => {
       userName,
       image
     },
- likes,
+    likes[]->{
+      _id,
+      userName,
+      image,
+    },
 
     comments[]{
       comment,
