@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import s from "./Modal.styles";
 import { IoMdCloseCircle } from "react-icons/io";
 
@@ -24,16 +23,16 @@ export const Modal: React.FC<React.PropsWithChildren<Props>> = ({
   size,
 }) => {
   return (
-    <s.Wrapper>
-      <s.Modal width={MODAL_DIMENTIONS[size]}>
-        <s.ModalContent>
-          <s.Close onClick={onClose}>
-            <IoMdCloseCircle />
-          </s.Close>
-          <s.Heading>{heading}</s.Heading>
-          <div> {children}</div>
-        </s.ModalContent>
-      </s.Modal>
-    </s.Wrapper>
+    <>
+      <s.ModalOverlay />
+      <s.ModalWrapper width={MODAL_DIMENTIONS[size]}>
+        <s.Close onClick={onClose}>
+          <IoMdCloseCircle />
+        </s.Close>
+        <s.Heading>{heading}</s.Heading>
+
+        {children}
+      </s.ModalWrapper>
+    </>
   );
 };

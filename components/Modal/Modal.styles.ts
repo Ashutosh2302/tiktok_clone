@@ -1,57 +1,4 @@
 import styled, { css } from "styled-components";
-const Modal = styled.div<{ width: string }>`
-  width: 500px;
-  max-width: 90%;
-  margin: auto;
-  max-height: 80vh;
-  border-radius: 4px;
-  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.2);
-  background-color: white;
-  position: fixed;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-
-  animation: enter 0.2s ease-out;
-
-  @keyframes enter {
-    from {
-      transform: translateY(-1rem);
-      opacity: 0;
-    }
-
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-`;
-
-const Wrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 4;
-`;
-
-const ModalContent = styled.div<{ noPadding?: boolean }>`
-  padding: ${(props) => (props.noPadding ? "0" : "2rem")};
-  max-height: 80vh;
-  overflow-y: auto;
-`;
-
-const Children = styled.div<{ noPadding?: boolean }>`
-  padding: ${(props) => (props.noPadding ? "0" : "2rem")};
-  max-height: 80vh;
-`;
 
 const Close = styled.button`
   all: unset;
@@ -72,4 +19,33 @@ const Heading = styled.button`
   text-align: center;
 `;
 
-export default { Modal, Wrapper, ModalContent, Close, Heading, Children };
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // semi-transparent black color
+  z-index: 1000;
+`;
+
+const ModalWrapper = styled.div<{ width: string }>`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1001;
+  width: 500px;
+  max-height: 70%;
+  overflow-y: auto;
+`;
+
+export default {
+  Close,
+  Heading,
+  ModalOverlay,
+  ModalWrapper,
+};
